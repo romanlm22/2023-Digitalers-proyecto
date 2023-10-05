@@ -8,6 +8,13 @@
 
 
 */
+
+const formularioProducto = document.getElementById("producForm")
+
+formularioProducto.addEventListener('submit', () => {
+    alert(`Evento submit`)
+})
+
 const consolas = [
     {
         descripcion: 'Consola de hogar con gráficos en alta definición.',
@@ -41,19 +48,46 @@ const consolas = [
         imagen: 'https://assets2.ignimgs.com/2016/07/25/nes-classic-edition-usjpg-7ceec8.jpg',
         categoria: 'Consola Retro'
     },
-    true,
-    "Conso es ahora sola una string",
-    // ... Puedes continuar agregando más consolas según lo desees.
 ];
 
+const tableBodyHTML = document.querySelector("#table-body")
 console.log(consolas)
 
 consolas.forEach(function(conso){
     
-    document.write(conso.titulo)
+    tableBodyHTML.innerHTML += 
+    `<tr>
+    <td class="table-img">
+          <img src="${conso.imagen}" alt="${conso.titulo}">
+    </td>
+    <td class="table-title">${conso.titulo}</td>
+    <td class="table-description">${conso.descripcion}</td>
+    <td class="table-price">${conso.precio}</td>
+    <td class="table-category">${conso.categoria}</td>
+  </tr>`
 
 })
 
 
 for(let consol of consolas){
+
+
 }
+/*
+<tr>
+              <td class="table-img">
+                    <img src="https://www.cnet.com/a/img/resize/bebef835df90640f9aa2e4a2f2a2699cf53a301f/hub/2020/10/26/b60bfe6f-3193-4381-b0d4-ac628cdcc565/img-1419.jpg?auto=webp&width=1200" alt="">
+              </td>
+              <td class="table-title">ps5</td>
+              <td class="table-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, corporis.</td>
+              <td class="table-price">1000</td>
+              <td class="table-category">Consolas</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+*/
+

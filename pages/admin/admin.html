@@ -11,34 +11,89 @@
 <body>
     <a href="/pages/admin/admin.html">Administrador</a>
 
-    <table class="table table-dark table-striped-columns">
-        <thead>
-            <tr>
-              <th scope="col">Imagen</th>
-              <th scope="col">tiyulo</th>
-              <th scope="col">Descripcion del producto</th>
-              <th scope="col">Precio</th>
-              <th scope="col">Categoria</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="table-img">
-                    <img src="https://www.cnet.com/a/img/resize/bebef835df90640f9aa2e4a2f2a2699cf53a301f/hub/2020/10/26/b60bfe6f-3193-4381-b0d4-ac628cdcc565/img-1419.jpg?auto=webp&width=1200" alt="">
-              </td>
-              <td class="table-title">ps5</td>
-              <td class="table-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, corporis.</td>
-              <td class="table-price">1000</td>
-              <td class="table-category">Consolas</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-          </tbody>
-      </table>
+    <div class="container-xl">
+
+        <div class="row">
+            <!--Formularo-->
+            <div class="col-12 col-md-6">
+                <!--Formularo-->
+                <form id="producForm">
+
+                    <div class="mb-3">
+                        <label for="tituloProducto" class="form-label">Nombre Producto</label>
+                        <input type="text" name="titulo" class="form-control" id="tituloProducto" placeholder="Play Station 3" required minlength="3" maxlength="70">
+                    </div>
+
+                   
+                            <div class="mb-3 d-flex gap-2">
+                                <div class="w-100">
+                                    <label for="precioProducto" class="form-label">Precio Producto</label>
+                                    <input type="number" name="precio" class="form-control" id="precioProducto" placeholder="100000" min="3" max="7000000">
+                                </div>
+                                <div class="w-100">
+                                    <label for="categoriaProducto" class="form-label">Categoria</label>
+                                <select class="form-select" name="categoria" id="categoriaProducto" required>
+                                        <option value="consolas">Consolas</option>
+                                        <option value="juegos">Juegos</option>
+                                        <option value="Acesorios">Acesorios</option>
+                                </select>
+                                </div>
+                            </div>
+
+                <div class="mb-3">
+                    <label for="imagenProducto" class="form-label">Imagen del Producto</label>
+                    <input type="url" name="imagen" class="form-control" id="imagenProducto" placeholder="https://"  required minlength="5" maxlength="10000">
+                </div>
+
+
+
+                        <div class="mb-3">
+                            <label for="descripcionProducto" class="form-label">Descripcion del producto</label>
+                            <textarea name="descripcion" class="form-control" id="descripcionProducto" rows="3" required minlength="9" maxlength="400" placeholder="Descripcion del producto"></textarea>
+                        </div>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary mb-3">Agregar</button>
+                </form>
+
+
+            <div class="col-12 col-md-6">
+                <!--Tabla-->
+                <table class="table table-dark table-striped-columns">
+                    <thead>
+                        <tr>
+                          <th scope="col">Imagen</th>
+                          <th scope="col">tiyulo</th>
+                          <th scope="col">Descripcion del producto</th>
+                          <th scope="col">Precio</th>
+                          <th scope="col">Categoria</th>
+                        </tr>
+                      </thead>
+                      <tbody id="table-body">
+                        <!--<tr>
+                          <td class="table-img">
+                                <img src="https://www.cnet.com/a/img/resize/bebef835df90640f9aa2e4a2f2a2699cf53a301f/hub/2020/10/26/b60bfe6f-3193-4381-b0d4-ac628cdcc565/img-1419.jpg?auto=webp&width=1200" alt="">
+                          </td>
+                          <td class="table-title">ps5</td>
+                          <td class="table-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, corporis.</td>
+                          <td class="table-price">1000</td>
+                          <td class="table-category">Consolas</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">2</th>
+                          <td>Jacob</td>
+                          <td>Thornton</td>
+                          <td>@fat</td>
+                        </tr>-->
+                      </tbody>
+                  </table>
+            </div>
+
+
+        </div>
+    </div>
+
 
 
 
