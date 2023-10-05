@@ -17,3 +17,16 @@
 .table-price{
     font-weight: bold;
 }
+
+button{
+    padding: .5rem 1rem;
+    border: 1px solid grey;
+    outline: none;
+    cursor: pointer;
+    background-color: grey;
+    color: white;
+}
+
+textarea{
+    resize: none;
+}
