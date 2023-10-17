@@ -10,6 +10,10 @@
 */
 const tableBodyHTML = document.querySelector("#table-body")
 
+const inputFiltrar = document.getElementById("filtrar")
+
+let idEditar;
+
 const formularioProducto = document.getElementById("producForm")
 
 formularioProducto.addEventListener('submit', (eventoEjecutado) => {
@@ -17,8 +21,17 @@ formularioProducto.addEventListener('submit', (eventoEjecutado) => {
 
     const el = formularioProducto.elements
 
+    //const id = idEditar === undefined ? crypto.randomUUID(): idEditar
+
+    let id;
+    if(idEditar){
+        id = idEditar
+    }else{
+        id = crypto.randomUUID()
+    }
+
     const nuevoProducto = {
-        id: crypto.randomUUID(),
+        id: id,
         titulo : el.titulo.value,
         descripcion: el.descripcion.value,
         precio: el.precio.valueAsNumber,
@@ -28,12 +41,30 @@ formularioProducto.addEventListener('submit', (eventoEjecutado) => {
         cantidad: 10,
     }
 
+    if(idEditar){
+        const index = consolas.findIndex(consolas => {
+            return consolas.id === idEditar
+        })
+        consolas[index] = nuevoProducto;
+        idEditar = undefined
+        btn.innerText = "Agregar"
+        btn.classList.remove(nuevoProducto)
 
+    }else{
     consolas.push(nuevoProducto)
+    }
 
-    pintarProductos()
-    //formularioProducto.reset()
-    //el.titulo.focus()
+    Swal.fire({
+        icon: 'success',
+        title: 'Oops...',
+        text: 'El productop se actualizo o se agregar a la lista',
+        footer: '<a href="">Why do I have this issue?</a>'
+      })
+
+
+    pintarProductos(consolas)
+    formularioProducto.reset()
+    el.titulo.focus()
 })
 
 
@@ -53,10 +84,83 @@ function obtenerFecha(){
     return fechaFormateada
 }
 
-function borrarProductos(indiceRecibido){
-    consolas.splice(indiceRecibido, 1)
-    pintarProductos()
+function borrarProductos(idAbuscar){
+    const indiceEncontrado = consolas.findIndex((productoFin) => {
+        if(productoFin.id === idAbuscar){
+            return true
+        }
+        return false
+    })
+    consolas.splice(indiceEncontrado, 1)
+    console.log(indiceEncontrado)
+    pintarProductos(consolas)
 }
+
+const editarProductos = function(idAbuscar){
+    //Opcion 1
+   /* console.log(`Editar elemento ${idAbuscar}`)
+
+    const productoeditar = consolas.filter(prod => {
+        if(idAbuscar === prod.id){
+            return true
+        }
+        return false
+    })
+
+    console.log(productoEditar[0])
+    
+
+    //opcion 2
+    const prodIndex = consolas.findIndex(prod => {
+        if(prod.id === idAbuscar){
+            return true
+        }
+    })
+    const productoEditar = consolas[0]
+    */
+
+    //opcion3
+
+
+    console.log(`Editar elemento ${idAbuscar}`)
+
+    const productoEditar = consolas.find(prod => {
+        if(prod.id === 1){
+            return true
+        }
+    })
+
+        if(!productoEditar)return;
+
+
+    const elements = formularioProducto.elements;
+    
+    elements.titulo.value = productoEditar.titulo
+    elements.precio.value = productoEditar.precio
+    elements.descripcion.value = productoEditar.descripcion
+    elements.imagen.value = productoEditar.imagen
+    elements.categoria.value = productoEditar.categoria
+
+
+    const btn = document.querySelector('button.btn[type="submit"]')
+    btn.innerHTML = "Agregar Producto"
+    btn.classList.remove("btn-success")
+}
+
+/**function obtenerBotones(){
+const deleteButtons = document.querySelectorAll(".btn-delete")
+    
+    console.log(deleteButtons)
+    
+    deleteButtons.forEach((btn, indice) =>{
+        btn.addEventListener('click', ()=>{
+            borrarProductos(indide)
+        })
+    })
+}
+
+obtenerBotones()
+*/
 
 const consolas = [
     {
@@ -66,7 +170,7 @@ const consolas = [
         fechaDeCreacion: '2020-11-12',
         precio: 499.99,
         imagen: 'https://www.cnet.com/a/img/resize/bebef835df90640f9aa2e4a2f2a2699cf53a301f/hub/2020/10/26/b60bfe6f-3193-4381-b0d4-ac628cdcc565/img-1419.jpg?auto=webp&width=1200',
-        categoria: 'Consola de Hogar'
+        categoria: 'consolas'
     },
     {
         id: 'fqnfqi-2332124-FNAUUF',
@@ -75,7 +179,7 @@ const consolas = [
         fechaDeCreacion: '2017-03-03',
         precio: 299.99,
         imagen: 'https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2023/01/nintendo-switch-2921302.jpg',
-        categoria: 'Consola Portátil'
+        categoria: 'consolas'
     },
     {
         id: 'fqnfqi-2332124FHAFHUAF-',
@@ -84,7 +188,7 @@ const consolas = [
         fechaDeCreacion: '2020-11-10',
         precio: 499.99,
         imagen: 'https://www.infobae.com/new-resizer/l0UsM401-2y3WTZlhd7SLL-A28A=/filters:format(webp):quality(85)/cloudfront-us-east-1.images.arcpublishing.com/infobae/ALSWDCH7PJBJPG6WHP632NO7Q4.png',
-        categoria: 'Consola de Hogar'
+        categoria: 'consolas'
     },
     {
         id: 'fqnfqi-233EFU-134872',
@@ -93,26 +197,34 @@ const consolas = [
         fechaDeCreacion: '2016-11-10',
         precio: 59.99,
         imagen: 'https://assets2.ignimgs.com/2016/07/25/nes-classic-edition-usjpg-7ceec8.jpg',
-        categoria: 'Consola Retro'
+        categoria: 'consolas'
     },
 ];
 
-const inputFiltrar = document.getElementById("filtrar")
 
 inputFiltrar.addEventListener('keyup', (evt) => {
-console.log(evt.target.value)
+
+    const busqueda = evt.target.value.toLowerCase(); 
+
+    const resultado = consolas.filter((producto) => {
+        const titulo = producto.titulo.toLowerCase()
+
+        if(titulo.includes(busqueda)){
+            return true
+        }
+        return false
+    })
+    pintarProductos(resultado)
 
 })
+//el elemento .pop quitar el ultimo elemento
 
 console.log(consolas)
 
-
-
-
-function pintarProductos(){
+function pintarProductos(arrayPintar){
 
     tableBodyHTML.innerHTML = "";
-    consolas.forEach(function(conso, indice){
+    arrayPintar.forEach(function(conso, indice){
         
         tableBodyHTML.innerHTML += 
         `<tr>
@@ -124,9 +236,14 @@ function pintarProductos(){
         <td class="table-price">${conso.precio}</td>
         <td class="table-category">${conso.categoria}</td>
         <td>
-            <button class="btn btn-danger btn-sm" onclick="borrarProductos(${indice})">
+            <div class="d-flex">
+            <button class="btn btn-danger btn-sm" onclick="borrarProductos('${conso.id}')">
                 <i class="fa-solid fa-trash"></i>
             </button>
+            <button class="btn btn-success btn-sm"  onclick="editarProductos('${conso.id}')">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            </div>
         </td>
       </tr>`
     
@@ -136,8 +253,22 @@ function pintarProductos(){
 }
 
 
-pintarProductos()
+pintarProductos(consolas)
 
+
+
+
+/*
+duplicar array y evitar referencia entre ambos
+
+array1 = [1,2,3,4]
+    #1
+    array2 = array1.slice()
+    #2
+    array2 = array.from(array1)
+    #3
+
+*/
 
 for(let consol of consolas){
     
