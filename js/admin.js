@@ -58,11 +58,13 @@ formularioProducto.addEventListener('submit', (eventoEjecutado) => {
         icon: 'success',
         title: 'Oops...',
         text: 'El productop se actualizo o se agregar a la lista',
-        footer: '<a href="">Why do I have this issue?</a>'
-      })
+    })
 
 
     pintarProductos(consolas)
+
+    localStorage.setItem("productos", JSON.stringify(consolas))
+
     formularioProducto.reset()
     el.titulo.focus()
 })
@@ -84,7 +86,7 @@ function obtenerFecha(){
     return fechaFormateada
 }
 
-function borrarProductos(idAbuscar){
+const borrarProductos = (idAbuscar) =>{
     const indiceEncontrado = consolas.findIndex((productoFin) => {
         if(productoFin.id === idAbuscar){
             return true
@@ -92,9 +94,39 @@ function borrarProductos(idAbuscar){
         return false
     })
     consolas.splice(indiceEncontrado, 1)
-    console.log(indiceEncontrado)
     pintarProductos(consolas)
+
+
+    localStorage.setItem("productos", JSON.stringify(consolas))
+    Swal.fire('Borrado', 'Producto eliminado', 'success')
 }
+
+/*const borrarProducto = (idAbuscar)=>{
+    Swal.fire({
+        title: 'Desea borrar',
+        icon: 'error',
+        text: 'Realmente desealo borrar',
+        showCloseButton: true,
+        showCancelButton: true,
+        cancelButtonText : 'Cancelar',
+        confirmButtonText: 'Borrar',
+
+    }).then((resultado) => {
+        if(resultado.isConfirmed){
+            const indiceEncontrado = consolas.findIndex((productoFin) => {
+                if(productoFin.id === idAbuscar){
+                    return true
+                }
+                return false
+            })
+            consolas.splice(indiceEncontrado, 1)
+            pintarProductos(consolas)
+            Swal.fire('Borrado', 'Producto eliminado', 'success')
+        }
+    })
+}
+*/
+
 
 const editarProductos = function(idAbuscar){
     //Opcion 1
@@ -162,7 +194,15 @@ const deleteButtons = document.querySelectorAll(".btn-delete")
 obtenerBotones()
 */
 
-const consolas = [
+let consolas = JSON.parse(localStorage.getItem("productos")) || consolasPrimerInicio
+
+if(JSON.parse(localStorage.getItem("productos"))===NULL){
+    localStorage.setItem("productos", JSON.stringify(consolas))
+}
+
+console.log(consolas)
+
+let consolasPrimerInicio = [
     {
         id: 'fqnfqi-2332124-13341',
         descripcion: 'Consola de hogar con gráficos en alta definición.',

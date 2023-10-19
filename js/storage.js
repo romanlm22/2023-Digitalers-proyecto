@@ -13,3 +13,23 @@ Swal.fire('Bienvenido', `Que bueno verte de nuevo ${nombreGuardado}`)
 
 localStorage.clear()//esto borra todo el array
 
+const user = [
+    {
+        fullname: 'Nora Machado',
+        email: 'machado.nora@example.con',
+        id: '7'
+    },
+    {
+        fullname: 'Maximiliano Lopez',
+        email: 'machado.maximilianoa@example.con',
+        id: '0'
+    }
+]
+
+localStorage.setItem("nombreGuardado", JSON.stringify(user))
+
+const temp = JSON.parse ( localStorage.getItem("nombreGuardados")) 
+
+console.log(temp)
+
+
